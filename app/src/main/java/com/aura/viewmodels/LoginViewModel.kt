@@ -1,15 +1,16 @@
-package com.aura.ui.login
+package com.aura.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aura.data.remote.LoginApiService
-import com.aura.data.remote.LoginCredentials
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val apiService: LoginApiService): ViewModel() {
-    private val _loginState = MutableStateFlow<LoginState>(LoginState.Loading)
+    private val _loginEnabled = MutableStateFlow(false)
+    val loginEnabled: StateFlow<Boolean> = _loginEnabled
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
     val loginState: StateFlow<LoginState> = _loginState
 
 
@@ -17,7 +18,7 @@ class LoginViewModel(private val apiService: LoginApiService): ViewModel() {
         viewModelScope.launch {
             _loginState.value = LoginState.Loading
             try {
-                val response = apiService.login(LoginCredentials(username, password))
+                val response = apiService.login(username, password)
                 if (response.success) {
                     _loginState.value = LoginState.Success(response.success)
                 } else {
@@ -31,6 +32,7 @@ class LoginViewModel(private val apiService: LoginApiService): ViewModel() {
 }
 
 sealed class LoginState {
+    object Idle : LoginState()
     object Loading : LoginState()
     data class Success(val success: Boolean) : LoginState()
     data class Error(val message: String) : LoginState()
