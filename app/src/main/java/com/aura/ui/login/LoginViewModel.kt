@@ -1,16 +1,11 @@
-package com.aura.viewmodels
+package com.aura.ui.login
 
-import android.content.Context
-import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aura.data.remote.LoginApiService
 import com.aura.data.remote.LoginCredentials
-import com.aura.ui.login.LoginActivity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val apiService: LoginApiService): ViewModel() {

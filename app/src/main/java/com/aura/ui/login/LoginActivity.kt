@@ -6,7 +6,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.aura.databinding.ActivityLoginBinding
 import com.aura.ui.home.HomeActivity
-import com.aura.viewmodels.LoginViewModel
 
 /**
  * The login activity for the app.
