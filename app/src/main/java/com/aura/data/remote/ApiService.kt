@@ -6,11 +6,8 @@ import retrofit2.http.Query
 
 interface LoginApiService {
     @POST("login")
-    suspend fun login(
-        @Query(value = "id") username: String,
-        @Query(value = "password") password: String
-    ): LoginResponse
+    suspend fun login(@Body loginRequest: LoginRequest): LoginResponse
 }
 
-data class LoginCredentials(val username: String, val password: String)
-data class LoginResponse(val success: Boolean)
+data class LoginRequest(val id: String, val password: String)
+data class LoginResponse(val granted: Boolean)
