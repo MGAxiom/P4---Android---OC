@@ -64,7 +64,11 @@ class LoginActivity : AppCompatActivity() {
                 when (granted) {
                     is LoginState.Loading -> showLoading(true)
                     is LoginState.Success -> handleSuccess()
-                    is LoginState.Error -> showError(granted.message)
+                    is LoginState.Error -> {
+                        showLoading(false)
+                        binding.login.isEnabled = false
+                        showError(granted.message)
+                    }
                     else -> showLoading(false)
                 }
             }
@@ -83,6 +87,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        binding.login.isEnabled = true
     }
 }
 
