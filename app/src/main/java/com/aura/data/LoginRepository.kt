@@ -9,6 +9,7 @@ class LoginRepository(private val api: LoginApiService) {
             val response = api.login(LoginRequest(id, password))
             response.granted
         } catch (e: Exception) {
+            print(e)
             false
         }
     }

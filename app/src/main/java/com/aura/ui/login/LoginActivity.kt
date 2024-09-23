@@ -1,12 +1,16 @@
 package com.aura.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.aura.databinding.ActivityLoginBinding
+import com.aura.ui.home.HomeActivity
 import com.aura.viewmodels.LoginState
 import com.aura.viewmodels.LoginViewModel
 import kotlinx.coroutines.launch
@@ -68,12 +72,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        // Show or hide loading indicator
+        binding.loading.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun handleSuccess() {
         Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-        // Navigate to next screen
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showError(message: String) {
@@ -81,35 +86,4 @@ class LoginActivity : AppCompatActivity() {
     }
 }
 
-//private fun observeLoginState() {
-//    lifecycleScope.launch {
-//        viewModel.loginState.collect { state ->
-//            when (state) {
-//                is LoginState.Idle -> {
-//                    binding.loading.visibility = View.GONE
-//                }
-//
-//                is LoginState.Loading -> {
-//                    binding.loading.visibility = View.VISIBLE
-//                    binding.login.isEnabled = false
-//                }
-//
-//                is LoginState.Success -> {
-//                    binding.loading.visibility = View.GONE
-//                    binding.login.isEnabled = true
-//
-//                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-//                    startActivity(intent)
-//                    finish()
-//                }
-//
-//                is LoginState.Error -> {
-//                    binding.loading.visibility = View.GONE
-//                    binding.login.isEnabled = true
-//
-//                    Toast.makeText(this@LoginActivity, state.message, Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
 

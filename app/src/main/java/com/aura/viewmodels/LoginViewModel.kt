@@ -3,9 +3,7 @@ package com.aura.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aura.data.LoginRepository
-import com.aura.data.remote.ApiClient.loginApiService
-import com.aura.data.remote.LoginApiService
-import com.aura.data.remote.LoginRequest
+
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -19,11 +17,11 @@ class LoginViewModel(private val repository: LoginRepository): ViewModel() {
         viewModelScope.launch {
             _loginState.value = LoginState.Loading
             try {
-                val response = repository.login(id, password)
-                _loginState.value = if (response) {
+                val isLoginSuccessful = repository.login(id, password)
+                _loginState.value = if (isLoginSuccessful) {
                     LoginState.Success
                 } else {
-                    LoginState.Error("Login failed")
+                    LoginState.Error("Login failed: Incorrect credentials")
                 }
             } catch (e: Exception) {
                 _loginState.value = LoginState.Error(e.message ?: "An error occurred")

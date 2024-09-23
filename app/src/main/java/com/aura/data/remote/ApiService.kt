@@ -1,13 +1,22 @@
 package com.aura.data.remote
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import retrofit2.http.Body
 import retrofit2.http.POST
-import retrofit2.http.Query
 
 interface LoginApiService {
     @POST("login")
     suspend fun login(@Body loginRequest: LoginRequest): LoginResponse
 }
 
-data class LoginRequest(val id: String, val password: String)
-data class LoginResponse(val granted: Boolean)
+@JsonClass(generateAdapter = true)
+data class LoginRequest(
+    @Json(name = "id") val id: String,
+    @Json(name = "password") val password: String
+)
+
+@JsonClass(generateAdapter = true)
+data class LoginResponse(
+    @Json(name = "granted") val granted: Boolean
+)
