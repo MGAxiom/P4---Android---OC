@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.aura.databinding.ActivityLoginBinding
 import com.aura.ui.home.HomeActivity
@@ -82,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
     private fun handleSuccess() {
         Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
         val intent = Intent(this, HomeActivity::class.java)
+        intent.putExtra("id", binding.identifier.text.toString())
         startActivity(intent)
     }
 

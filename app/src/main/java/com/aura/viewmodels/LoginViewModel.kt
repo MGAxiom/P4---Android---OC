@@ -2,7 +2,7 @@ package com.aura.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aura.data.LoginRepository
+import com.aura.data.repositories.LoginRepository
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

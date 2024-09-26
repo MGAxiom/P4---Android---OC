@@ -1,6 +1,9 @@
 package com.aura.data
 
-import com.aura.data.remote.LoginApiService
+import com.aura.data.remote.ApiService
+import com.aura.data.repositories.HomeRepository
+import com.aura.data.repositories.LoginRepository
+import com.aura.viewmodels.HomeViewModel
 import com.aura.viewmodels.LoginViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -19,10 +22,13 @@ val appModule = module {
             .baseUrl("http://10.0.2.2:8080/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-            .create(LoginApiService::class.java)
+            .create(ApiService::class.java)
     }
 
-    single { LoginRepository(get<LoginApiService>()) }
+    single { LoginRepository(get<ApiService>()) }
+    single { HomeRepository(get<ApiService>()) }
 
-    viewModel { LoginViewModel(get<LoginRepository>()) }
+
+    viewModel { LoginViewModel(get()) }
+    viewModel { HomeViewModel(get()) }
 }

@@ -34,6 +34,37 @@
     tools:text="@tools:sample/full_names"
     />
 
+  <Button
+      android:id="@+id/retry"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="start"
+      android:layout_marginTop="16dp"
+      android:layout_marginBottom="64dp"
+      android:text="@string/retry"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/loading"
+      app:layout_constraintVertical_bias="0.2"
+      android:visibility="gone"
+      />
+
+  <ProgressBar
+      android:id="@+id/loading"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="64dp"
+      android:layout_marginBottom="64dp"
+      android:visibility="gone"
+      app:layout_constraintBottom_toTopOf="@+id/retry"
+      app:layout_constraintEnd_toEndOf="@+id/balance"
+      app:layout_constraintStart_toStartOf="@+id/balance"
+      app:layout_constraintTop_toBottomOf="@+id/balance"
+      app:layout_constraintVertical_bias="0.3"
+      />
+
   <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/transfer"
     android:layout_width="wrap_content"

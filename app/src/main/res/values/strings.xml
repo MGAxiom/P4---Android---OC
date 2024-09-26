@@ -6,6 +6,7 @@
   <string name="action_sign_in">Connexion</string>
 
   <string name="balance">Balance :</string>
+  <string name="retry">Réessayer</string>
   <string name="disconnect">Déconnexion</string>
   <string name="bank_transfer">Faire un virement</string>
 
