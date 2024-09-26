@@ -118,7 +118,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun updateBalance(balance: Double) {
-        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Balance retrieved", Toast.LENGTH_SHORT).show()
         binding.balance.text = "$balance €"
     }
 
