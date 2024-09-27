@@ -1,5 +1,6 @@
 package com.aura.ui.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -36,7 +37,23 @@ class HomeActivity : AppCompatActivity() {
      */
     private val startTransferActivityForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            //TODO
+            when (result.resultCode) {
+                Activity.RESULT_OK -> {
+                    val data: Intent? = result.data
+                    val transferAmount = data?.getDoubleExtra("TRANSFER_AMOUNT", 0.0) ?: 0.0
+                    val transferStatus = data?.getStringExtra("TRANSFER_STATUS")
+                    handleSuccessfulTransfer(transferAmount, transferStatus)
+                }
+                Activity.RESULT_CANCELED -> {
+                    val errorMessage = result.data?.getStringExtra("ERROR_MESSAGE")
+                    if (errorMessage != null) {
+                        handleFailedTransfer(errorMessage)
+                    } else {
+                        handleCancelledTransfer()
+                    }
+                }
+                else -> handleFailedTransfer("Unexpected result")
+            }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,22 +62,19 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val balance = binding.balance
         val transfer = binding.transfer
         val id = intent.getStringExtra("id")
 
-        balance.text = "2654,54€"
-
-        getAccountId(id ?: "")
+        getAccountId(id.orEmpty())
         observeBalanceState()
-        setupRetryButton(id ?: "")
+        setupRetryButton(id.orEmpty())
 
         transfer.setOnClickListener {
             startTransferActivityForResult.launch(
                 Intent(
                     this@HomeActivity,
                     TransferActivity::class.java
-                )
+                ).putExtra("id", id)
             )
         }
     }
@@ -80,6 +94,20 @@ class HomeActivity : AppCompatActivity() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun handleSuccessfulTransfer(amount: Double, status: String?) {
+        val id = intent.getStringExtra("id")
+        id?.let { getAccountId(it) }
+        Toast.makeText(this, "Transfer successful. Balance updated.", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun handleCancelledTransfer() {
+        Toast.makeText(this, "Transfer was cancelled.", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun handleFailedTransfer(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun getAccountId(id: String) {
@@ -102,6 +130,7 @@ class HomeActivity : AppCompatActivity() {
                         updateBalance(isFound.balance)
                         showLoading(false)
                     }
+
                     is BalanceState.Error -> {
                         showLoading(false)
                         showError(isFound.message)

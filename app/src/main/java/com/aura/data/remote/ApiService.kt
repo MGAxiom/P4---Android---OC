@@ -13,7 +13,22 @@ interface ApiService {
 
     @GET("accounts/{id}")
     suspend fun getAccount(@Path("id") id: String): List<AccountResponse>
+
+    @POST("transfer")
+    suspend fun transfer(@Body transferRequest: TransferRequest): TransferResponse
 }
+
+@JsonClass(generateAdapter = true)
+data class TransferRequest(
+    @Json(name = "sender") val sender: String,
+    @Json(name = "recipient") val recipient: String,
+    @Json(name = "amount") val amount: Double
+)
+
+@JsonClass(generateAdapter = true)
+data class TransferResponse(
+    @Json(name = "result") val result: Boolean
+)
 
 @JsonClass(generateAdapter = true)
 data class AccountResponse(

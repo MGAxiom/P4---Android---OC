@@ -3,8 +3,10 @@ package com.aura.data
 import com.aura.data.remote.ApiService
 import com.aura.data.repositories.HomeRepository
 import com.aura.data.repositories.LoginRepository
+import com.aura.data.repositories.TransferRepository
 import com.aura.viewmodels.HomeViewModel
 import com.aura.viewmodels.LoginViewModel
+import com.aura.viewmodels.TransferViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -27,8 +29,9 @@ val appModule = module {
 
     single { LoginRepository(get<ApiService>()) }
     single { HomeRepository(get<ApiService>()) }
-
+    single { TransferRepository(get<ApiService>()) }
 
     viewModel { LoginViewModel(get()) }
     viewModel { HomeViewModel(get()) }
+    viewModel { TransferViewModel(get()) }
 }
