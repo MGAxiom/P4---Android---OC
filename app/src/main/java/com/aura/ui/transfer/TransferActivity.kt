@@ -98,7 +98,6 @@ class TransferActivity : AppCompatActivity()
 
   private fun showLoading(isLoading: Boolean) {
     binding.loading.visibility = if (isLoading) View.VISIBLE else View.GONE
-    binding.transfer.isEnabled = !isLoading
   }
 
   private fun getTransferResult(result: Boolean) {
